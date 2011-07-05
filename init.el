@@ -46,6 +46,14 @@
       (switch-to-buffer buf)
       (insert content))))
 
+(define-key global-map (kbd "C-x M-f")
+  (lambda (&optional arg)
+    (interactive "p")
+    (if (or arg (not buffer-file-name))
+        (find-file (concat "/su::" (ido-read-file-name "File (Tramp): " "/")))
+        (find-alternate-file (concat "/su::" buffer-file-name)))))
+
+
 ;; window switching
 (define-key global-map (kbd "C-<tab>")
   (lambda () (interactive) (select-window (next-window))))
