@@ -18,9 +18,6 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
-(require 'ido)
-(ido-mode t)
-(ido-everywhere t)
 (setq ido-create-new-buffer 'always
       ido-default-buffer-method 'selected-window
       ido-case-fold t
@@ -32,6 +29,10 @@
       ido-confirm-unique-completion t
       ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
                         " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]"))
+
+(require 'ido)
+(ido-mode t)
+(ido-everywhere t)
 
 ;; remove .elc when saving .el
 (add-hook 'emacs-lisp-mode-hook
