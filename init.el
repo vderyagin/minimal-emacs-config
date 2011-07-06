@@ -33,6 +33,15 @@
       ido-decorations '("\n-> " "" "\n   " "\n   ..." "[" "]"
                         " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]"))
 
+;; remove .elc when saving .el
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (make-local-variable 'after-save-hook)
+            (add-hook 'after-save-hook
+                      (lambda ()
+                        (if (file-exists-p (concat buffer-file-name "c"))
+                            (delete-file (concat buffer-file-name "c")))))))
+
 (define-key global-map (kbd "M-g") 'goto-line)
 (define-key global-map (kbd "M-?") 'hippie-expand)
 
