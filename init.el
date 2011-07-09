@@ -89,6 +89,70 @@
 (define-key global-map (kbd "S-C-<down>") 'shrink-window)
 (define-key global-map (kbd "S-C-<up>") 'enlarge-window)
 
+
+(defun my-duplicate-line (&optional commentfirst)
+  "comment line at point; if COMMENTFIRST is non-nil, comment the original"
+  (interactive "P")
+  (beginning-of-line)
+  (push-mark)
+  (end-of-line)
+  (let ((str (buffer-substring (region-beginning) (region-end))))
+    (when commentfirst
+      (comment-region (region-beginning) (region-end)))
+    (insert
+     (concat (if (= 0 (forward-line 1)) "" "\n") str "\n"))
+    (forward-line -1)))
+
+(defun rename-file-and-buffer ()
+  "Renames current buffer and file it is visiting."
+  (interactive)
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (message "Buffer '%s' is not visiting a file!" name)
+        (let ((new-name (read-file-name "New name: " filename)))
+          (cond ((get-buffer new-name)
+                 (message "A buffer named '%s' already exists!" new-name))
+                (t
+                 (rename-file name new-name 1)
+                 (rename-buffer new-name)
+                 (set-visited-file-name new-name)
+                 (set-buffer-modified-p nil)))))))
+
+(defun comment-or-uncomment-current-line-or-region ()
+  "Comments or uncomments current current line or whole lines in region."
+  (interactive)
+  (save-excursion
+    (let (min max)
+      (if (and transient-mark-mode mark-active)
+          (setq min (region-beginning) max (region-end))
+          (setq min (point) max (point)))
+      (comment-or-uncomment-region
+       (progn (goto-char min) (line-beginning-position))
+       (progn (goto-char max) (line-end-position))))))
+
+(defun goto-match-paren (arg)
+  "Go to the matching parenthesis if on parenthesis. Else go to the
+   opening parenthesis one level up."
+  (interactive "p")
+  (cond ((looking-at "\\s\(") (forward-list 1))
+        (t
+         (backward-char 1)
+         (cond ((looking-at "\\s\)")
+                (forward-char 1) (backward-list 1))
+               (t
+                (while (not (looking-at "\\s("))
+                  (backward-char 1)
+                  (cond ((looking-at "\\s\)")
+                         (message "->> )")
+                         (forward-char 1)
+                         (backward-list 1)
+                         (backward-char 1)))))))))
+
+(define-key global-map (kbd "C-c ;") 'comment-or-uncomment-current-line-or-region)
+(define-key global-map (kbd "C-%") 'goto-match-paren)
+(define-key global-map (kbd "C-c c") 'my-duplicate-line)
+
 ;; Local Variables:
 ;; no-byte-compile: t
 ;; End:
