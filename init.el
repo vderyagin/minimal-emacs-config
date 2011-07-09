@@ -13,7 +13,20 @@
 (setq backup-inhibited t
       auto-save-default nil)
 
-(setq echo-keystrokes 0.4)
+(setq echo-keystrokes 0.4
+      debug-on-error nil
+      stack-trace-on-error nil
+      standard-indent 4
+      tab-always-indent 'complete
+      grep-scroll-output t)
+
+(setq-default comment-column 42
+              fill-column 78
+              indent-tabs-mode nil
+              tab-width 4
+              word-wrap t)
+
+(show-paren-mode t)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
