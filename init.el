@@ -89,6 +89,13 @@
 (define-key global-map (kbd "S-C-<down>") 'shrink-window)
 (define-key global-map (kbd "S-C-<up>") 'enlarge-window)
 
+(define-key global-map (kbd "M-0") 'delete-window)
+(define-key global-map (kbd "M-1") 'delete-other-windows)
+(define-key global-map (kbd "M-2") 'split-window-vertically)
+(define-key global-map (kbd "M-3") 'split-window-horizontally)
+(define-key global-map (kbd "M-4") 'kill-buffer-and-window)
+(define-key global-map (kbd "M-=") 'balance-windows)
+
 
 (defun my-duplicate-line (&optional commentfirst)
   "comment line at point; if COMMENTFIRST is non-nil, comment the original"
