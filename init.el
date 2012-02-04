@@ -1,5 +1,11 @@
 ;;; minimal configuration file for emacs as system default editor
 
+;; load gentoo-syntax stuff in available (syntax highliting for
+;; ebuilds/eclasses and stuff like that):
+(let ((f "/usr/share/emacs/site-lisp/site-gentoo.d/50gentoo-syntax-gentoo.el"))
+  (when (file-exists-p f)
+    (load-file f)))
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (menu-bar-mode -1)
