@@ -11,7 +11,6 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (mouse-wheel-mode -1)
-(mouse-sel-mode -1)
 
 (setq inhibit-startup-screen t
       initial-scratch-message ";; *scratch*\n\n")
