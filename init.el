@@ -39,6 +39,14 @@
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("^/tmp/zshec" . sh-mode))
 
+(setq sh-basic-offset 2)
+
+(eval-after-load 'sh-script
+  '(progn
+    (define-key sh-mode-map (kbd "M-l") nil)
+    (define-key sh-mode-map (kbd "<f9>") 'executable-interpret)
+    (define-key sh-mode-map (kbd "<RET>") 'reindent-then-newline-and-indent)))
+
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
